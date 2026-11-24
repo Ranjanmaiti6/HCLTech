@@ -1,0 +1,26 @@
+=============================================================================
+HCLTech Career Shaper - Final Academic Project Submission Links
+Project No: 10 - Employee Attrition Analysis
+Candidate Name: Ranjan Maiti
+Candidate Roll No: 2500321540146
+=============================================================================
+
+1. GITHUB REPOSITORY LINK:
+https://github.com/RanjanMaiti/HCLTech-Employee-Attrition-Analysis
+
+2. DEMO VIDEO LINK (UNLISTED YOUTUBE / GOOGLE DRIVE):
+https://drive.google.com/file/d/1A2B3C4D5E6F7G8H9-RanjanMaitiDemo/view?usp=sharing
+(Note: You can replace this link with your own uploaded Google Drive or Unlisted YouTube video link after recording using the script in presentation_and_video/demo_video_script.md)
+
+3. PROJECT DOCUMENTATION PORTAL:
+- Problem Statement & KPIs: docs/01_problem_statement_and_kpis.md
+- Star Schema Architecture: docs/02_er_and_star_schema_diagram.md
+- Data Quality & Reconciliation: docs/03_data_quality_report.md
+- Strategic Insights & Recommendations: docs/04_insights_summary_and_recommendations.md
+- Automated Test Suite Sign-off: docs/05_test_cases_and_verification.md
+
+4. POWER BI DASHBOARD FILE:
+- Build Guide: powerbi/powerbi_build_guide.md
+- DAX Measures: powerbi/dax_measures.txt
+- Generated Visual Proof: visual_outputs/dashboard_overview.png
+=============================================================================

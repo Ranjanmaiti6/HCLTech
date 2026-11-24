@@ -1,0 +1,100 @@
+=============================================================================
+HCLTech Career Shaper - Final Academic Project Submission
+Project No: 10 - Employee Attrition Analysis
+Candidate Name: Ranjan Maiti | Roll No: 2500321540146
+File: dax_measures.txt
+Description: Production DAX Formulas for Power BI Measures Table (_Measures)
+=============================================================================
+
+-- 1. BASELINE HEADCOUNT MEASURES
+Total Employees = 
+COUNTROWS(Fact_Attrition)
+
+Attrition Count = 
+SUM(Fact_Attrition[Attrition_Flag])
+
+Active Employees = 
+[Total Employees] - [Attrition Count]
+
+Attrition Rate % = 
+DIVIDE([Attrition Count], [Total Employees], 0) * 100
+
+Retention Rate % = 
+100 - [Attrition Rate %]
+
+
+-- 2. FINANCIAL & TENURE AVERAGES
+Average Monthly Salary = 
+AVERAGE(Fact_Attrition[MonthlyIncome])
+
+Median Monthly Salary = 
+MEDIAN(Fact_Attrition[MonthlyIncome])
+
+Average Tenure Years = 
+AVERAGE(Fact_Attrition[YearsAtCompany])
+
+Average Total Working Years = 
+AVERAGE(Dim_Employee[TotalWorkingYears])
+
+
+-- 3. SEGMENTED & CONDITIONAL RISK MEASURES
+OverTime Attrition Count = 
+CALCULATE(
+    [Attrition Count],
+    Fact_Attrition[OverTime] = "Yes"
+)
+
+OverTime Attrition Rate % = 
+CALCULATE(
+    [Attrition Rate %],
+    Fact_Attrition[OverTime] = "Yes"
+)
+
+Non-OverTime Attrition Rate % = 
+CALCULATE(
+    [Attrition Rate %],
+    Fact_Attrition[OverTime] = "No"
+)
+
+OverTime Impact Delta = 
+[OverTime Attrition Rate %] - [Non-OverTime Attrition Rate %]
+
+Early Career Attrition Rate % = 
+CALCULATE(
+    [Attrition Rate %],
+    Fact_Attrition[TenureBand] = "0-2 Years"
+)
+
+Low Salary Attrition Rate % = 
+CALCULATE(
+    [Attrition Rate %],
+    Fact_Attrition[SalaryBand] = "Low (<3.5k)"
+)
+
+Executive Outlier Count = 
+CALCULATE(
+    COUNTROWS(Fact_Attrition),
+    Fact_Attrition[Is_Salary_Outlier] = 1
+)
+
+
+-- 4. RISK BAND CLASSIFICATION MEASURE (DYNAMIC KPI INDICATOR)
+Attrition Risk Classification = 
+VAR Rate = [Attrition Rate %]
+RETURN
+    SWITCH(
+        TRUE(),
+        Rate >= 20.0, "CRITICAL RISK (RED)",
+        Rate >= 15.0, "ELEVATED RISK (AMBER)",
+        "STABLE / HEALTHY (GREEN)"
+    )
+
+
+-- 5. DYNAMIC DASHBOARD SUBTITLE / HEADER
+Dynamic Slicer Context = 
+"Displaying: " & 
+SELECTEDVALUE(Dim_Department[DepartmentName], "All Departments") & 
+" | Gender: " & 
+SELECTEDVALUE(Dim_Employee[Gender], "All Genders") & 
+" | Overall Attrition: " & 
+FORMAT([Attrition Rate %], "0.0") & "%"
