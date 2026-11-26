@@ -1,214 +1,143 @@
-# HCLTech Career Shaper Capstone Project
-# Project 10: Enterprise Employee Attrition Analysis & Workforce Intelligence
+# Employee Attrition Analysis (Project No. 10)
+## HR Workforce Intelligence & Turnover Risk Analytics
 
-[![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
-[![Oracle SQL 19c](https://img.shields.io/badge/Oracle-SQL%2019c-red.svg)](https://www.oracle.com/database/)
+[![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
+[![Oracle SQL](https://img.shields.io/badge/Oracle-SQL%2019c-red.svg)](https://www.oracle.com/database/)
 [![Power BI](https://img.shields.io/badge/Power%20BI-Desktop-yellow.svg)](https://powerbi.microsoft.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 ---
 
-### Candidate & Submission Information
-- **Candidate Name:** Ranjan Maiti
-- **Candidate Roll No:** 2500321540146
-- **Project Number:** Project 10
-- **Project Title:** Employee Attrition Analysis
-- **Domain:** HR and Workforce Analytics
+### Student & Project Submission Information
+- **Student Name:** Ranjan Maiti
+- **Roll Number:** 2500321540146
+- **Academic Level:** 2nd-Year B.Tech Student
+- **Project Number:** Project No. 10
+- **Project Name:** Employee Attrition Analysis
+- **Domain:** HR & Education / Workforce Analytics
 - **Evaluation Platform:** HCLTech Career Shaper LMS
+- **Repository Link:** [GitHub Repository](https://github.com/RanjanMaiti/HCLTech-Employee-Attrition-Analysis)
 
 ---
 
-## 1. Project Overview & Business Problem
-Employee attrition represents a major source of operational disruption and direct financial loss, with replacement costs averaging 50% to 200% of an annual salary per departure. 
+## 1. Project Introduction & Problem Statement
+Employee attrition refers to the departure of employees from an organization through voluntary resignation or turnover. In modern enterprises, losing skilled workforce talent causes substantial financial losses, operational delays, and loss of institutional knowledge. Industry research indicates that replacing a departing employee costs between **50% to 200% of their annual salary**.
 
-This project delivers an enterprise-grade analytics and business intelligence solution analyzing **1,470 employee profiles** from the benchmark IBM HR dataset. Using a modern analytics stack (**Python, Oracle SQL, and Power BI**), this project quantifies turnover drivers across departments, tenure cohorts, and salary bands, delivering actionable workforce retention strategies and a net projected annual cost savings of **$1.475 Million**.
+### Problem Statement
+Organizations frequently monitor only company-wide aggregate attrition figures (e.g., 16%), failing to identify critical pockets of turnover reaching **30% to 40%** within specific departments, tenure cohorts, and salary bands. Without clear data insights, leadership struggles to deploy effective retention strategies.
 
----
-
-## 2. Industry-Grade Deliverables Included
-
-| Deliverable Area | Artifact / File Location | Description |
-| :--- | :--- | :--- |
-| **Problem Statement & KPIs** | [`docs/01_problem_statement_and_kpis.md`](docs/01_problem_statement_and_kpis.md) | Business context, mathematical formulas, and KPI definitions. |
-| **Star Schema Blueprint** | [`docs/02_er_and_star_schema_diagram.md`](docs/02_er_and_star_schema_diagram.md) | Dimensional data model, data dictionaries, and ER architecture. |
-| **Data Quality Report** | [`docs/03_data_quality_report.md`](docs/03_data_quality_report.md) | Data profiling, 114 salary outlier audit, and cross-tool reconciliation. |
-| **Strategic Insights** | [`docs/04_insights_summary_and_recommendations.md`](docs/04_insights_summary_and_recommendations.md) | Top 3 visual insights, turnover risk matrix, and ROI recommendations. |
-| **Test Cases Sign-Off** | [`docs/05_test_cases_and_verification.md`](docs/05_test_cases_and_verification.md) | Automated validation of missing tenure, salary outliers, and division safety. |
-| **Python Pipeline** | [`python/01_data_cleaning_and_eda.py`](python/01_data_cleaning_and_eda.py) | Full ETL, outlier detection, star-schema generation, and plot rendering. |
-| **Automated Tests** | [`python/02_test_cases_validation.py`](python/02_test_cases_validation.py) | Automated test suite verifying edge cases and cross-tool reconciliation. |
-| **Interactive Notebook** | [`python/Employee_Attrition_Analysis.ipynb`](python/Employee_Attrition_Analysis.ipynb) | End-to-end interactive Jupyter Notebook with narrative and visuals. |
-| **Oracle SQL DDL** | [`sql/01_oracle_ddl_star_schema.sql`](sql/01_oracle_ddl_star_schema.sql) | Enterprise DDL with constraints, PK/FK, sequences, and indexes. |
-| **Oracle SQL ETL** | [`sql/02_oracle_data_load.sql`](sql/02_oracle_data_load.sql) | Staging transformation scripts and SQL*Loader control specifications. |
-| **Oracle Analytical SQL** | [`sql/03_oracle_attrition_queries.sql`](sql/03_oracle_attrition_queries.sql) | Advanced analytical queries utilizing `RANK`, `DENSE_RANK`, `RATIO_TO_REPORT`, and `ROLLUP`. |
-| **Oracle Views & PL/SQL** | [`sql/04_oracle_views_plsql.sql`](sql/04_oracle_views_plsql.sql) | Production BI views, `PRC_CHECK_ATTRITION_ALERT`, and `FN_CALC_ATTRITION_RISK_INDEX`. |
-| **Oracle Spool Output** | [`sql/query_execution_results.txt`](sql/query_execution_results.txt) | Complete SQL*Plus execution log proving query results and PL/SQL execution. |
-| **Power BI Build Guide** | [`powerbi/powerbi_build_guide.md`](powerbi/powerbi_build_guide.md) | Step-by-step canvas design guide, slicers, cards, and drill-down setup. |
-| **DAX Measures** | [`powerbi/dax_measures.txt`](powerbi/dax_measures.txt) | 12 production DAX measures formatted and ready to paste into Power BI. |
-| **High-Res Visuals** | [`visual_outputs/`](visual_outputs/) | 6 publication-quality charts (Overview, Dept, Tenure/Salary, Heatmap, Sentiment). |
-| **Demo Video Script** | [`presentation_and_video/demo_video_script.md`](presentation_and_video/demo_video_script.md) | Minute-by-minute speaking cues for a 3-5 minute presentation video. |
-| **Presentation Deck** | [`presentation_and_video/project_presentation_slides.md`](presentation_and_video/project_presentation_slides.md) | 11-slide capstone evaluation presentation deck. |
-| **Submission Links** | [`links.txt`](links.txt) | Centralized reference containing GitHub repo link and demo video link. |
+### Project Objectives
+1. **Analyze** 1,470 employee records from the benchmark IBM HR dataset to uncover key turnover patterns.
+2. **Perform Data Cleaning & EDA** in Python using Pandas, NumPy, Matplotlib, and Seaborn.
+3. **Build an Oracle SQL 19c Pipeline** with table DDL, analytical queries, and reporting views.
+4. **Design a Power BI Dashboard** with 5 executive KPI cards, 6 visualizations, and interactive slicers.
+5. **Formulate Data-Backed Recommendations** and calculate projected financial ROI.
 
 ---
 
-## 3. Repository Architecture
+## 2. Dataset Information & Source
+- **Dataset Name:** IBM HR Analytics Employee Attrition & Performance Dataset
+- **Publisher:** IBM Watson Analytics / Open Data Initiative
+- **Download Link:** [Kaggle Dataset Source](https://www.kaggle.com/datasets/pavansubhasht/ibm-hr-analytics-attrition-dataset)
+- **Dataset Verification:**
+  - **Total Records:** 1,470 rows
+  - **Features:** 35 raw columns, 37 cleaned analytical attributes
+  - **Data Quality:** 0 missing values (100% completeness), 0 duplicate rows
+  - **Target Variable:** `Attrition` ('Yes' = 237, 'No' = 1,233)
+  - **Salary Outliers:** 114 employees earning above $16,581/month (IQR method) were verified as Managers (74) and Research Directors (40) and retained via `Is_Salary_Outlier` to preserve executive leadership representation without distortion.
 
-```
-2500321540146_RanjanMaiti_EmployeeAttritionAnalysis/
-├── data/
-│   ├── raw/
-│   │   └── WA_Fn-UseC_-HR-Employee-Attrition.csv      # Authentic IBM benchmark dataset (1,470 rows)
-│   └── processed/
-│       ├── employee_attrition_clean.csv               # Master cleaned dataset
-│       ├── dim_department.csv                         # Department dimension
-│       ├── dim_job_role.csv                           # Job Role dimension
-│       ├── dim_education.csv                          # Education dimension
-│       ├── dim_employee.csv                           # Employee demographic dimension
-│       └── fact_attrition.csv                         # Central attrition fact table
+---
+
+## 3. Clean Project Directory Structure
+
+```text
+Employee_Attrition_Analysis/
+│
+├── dataset/
+│   ├── employee_attrition.csv            # Original raw IBM HR dataset (1,470 rows)
+│   └── employee_attrition_cleaned.csv    # Cleaned CSV with engineered cohort bands
+│
 ├── python/
-│   ├── 01_data_cleaning_and_eda.py                    # Main data engineering & plotting pipeline
-│   ├── 02_test_cases_validation.py                    # Automated test case verification suite
-│   ├── Employee_Attrition_Analysis.ipynb              # Complete interactive Jupyter Notebook
-│   └── requirements.txt                               # Python dependency manifest
+│   ├── employee_attrition_analysis.ipynb # 12-step executed Jupyter Notebook with charts
+│   └── requirements.txt                  # Python dependencies (pandas, matplotlib, etc.)
+│
 ├── sql/
-│   ├── 01_oracle_ddl_star_schema.sql                  # Star schema DDL & indexes
-│   ├── 02_oracle_data_load.sql                        # Data loading & staging transformations
-│   ├── 03_oracle_attrition_queries.sql                # Window functions & advanced aggregations
-│   ├── 04_oracle_views_plsql.sql                      # Views, stored procedures & functions
-│   ├── 05_oracle_test_cases.sql                       # Edge-case test queries
-│   └── query_execution_results.txt                    # Formatted SQL*Plus execution log
+│   └── employee_attrition_analysis.sql   # Consolidated Oracle SQL script (DDL, queries, views)
+│
 ├── powerbi/
-│   ├── powerbi_build_guide.md                         # Click-by-click dashboard construction guide
-│   ├── dax_measures.txt                               # Production DAX measures
-│   └── model_relationship_guide.md                   # Star schema relationship guide
-├── docs/
-│   ├── 01_problem_statement_and_kpis.md               # Business context & KPI definitions
-│   ├── 02_er_and_star_schema_diagram.md               # ER diagrams & data dictionary
-│   ├── 03_data_quality_report.md                      # Data profiling & 100% reconciliation table
-│   ├── 04_insights_summary_and_recommendations.md     # Top insights, risk matrix & ROI
-│   └── 05_test_cases_and_verification.md              # Test case execution & sign-off
-├── visual_outputs/
-│   ├── dashboard_overview.png                         # Master 4-panel dashboard visual
-│   ├── attrition_by_department.png                    # Attrition by job role & department
-│   ├── attrition_by_tenure_salary.png                 # Tenure vs Salary risk heatmap
-│   ├── correlation_heatmap.png                        # Correlation matrix of numeric features
-│   ├── satisfaction_vs_attrition.png                  # Multi-factor sentiment vs attrition
-│   └── key_drivers_summary.png                        # Disproportionate risk factor gaps
-├── presentation_and_video/
-│   ├── demo_video_script.md                           # Professional presentation script (3-5 min)
-│   └── project_presentation_slides.md                 # 11-slide capstone presentation outline
-├── links.txt                                          # GitHub & Demo Video links
-├── README.md                                          # Master documentation portal
-└── .gitignore                                         # Version control ignore rules
+│   ├── dax_measures.txt                  # Complete DAX measures for all KPI cards & charts
+│   └── powerbi_build_guide.md            # Step-by-step instructions to build the dashboard
+│
+├── dashboard/
+│   ├── dashboard_screenshot.png          # High-resolution Power BI dashboard overview
+│   └── analysis_charts.png               # 6-panel Python exploratory analysis chart
+│
+├── submission/
+│   ├── Employee_Attrition_Analysis_Report.pdf # 7-page comprehensive academic project report
+│   ├── Dataset_Details.pdf               # Teacher-required dataset proof & column dictionary
+│   └── submission_checklist.md           # HCL Portal evaluation checklist
+│
+├── README.md                             # Main project guide (this file)
+└── .gitignore                            # Clean git exclusion rules
 ```
 
 ---
 
-## 4. Key Analytical Insights Summary
+## 4. How to Run & Verify Each Component
 
-```
-=============================================================================
-OVERALL WORKFORCE BASELINE:
-Total Employees: 1,470 | Active: 1,233 | Leavers: 237 | Attrition Rate: 16.12%
-=============================================================================
-```
-
-### Insight 1: OverTime is the #1 Turnover Multiplier (30.53% vs 10.44%)
-- Staff required to work regular overtime suffer an attrition rate of **30.53%** (127 leavers out of 416), nearly triple the rate of non-overtime staff (**10.44%**).
-- When combined with frequent travel, turnover reaches **40.21%**.
-
-### Insight 2: The Two-Year Flight Window (43.0% of all Leavers)
-- Employees in their first 2 years of tenure exhibit a **29.82% attrition rate**.
-- Although 0-2 year staff represent only 23.3% of the headcount, they account for **43.04% of all resignations** (102 leavers).
-
-### Insight 3: Sales Department & Entry Roles Face Severe Turnover
-- **Sales Department:** 20.63% attrition rate (highest among all departments).
-- **Sales Representatives:** Experience an alarming **39.76% attrition rate**, primarily driven by entry-level compensation ($2,626/month).
-
----
-
-## 5. Automated Test Cases & Acceptance Criteria Verification
-
-All four mandatory test cases passed with zero regressions:
-
-| Test ID | Scope | Verification Logic | Status |
-| :--- | :--- | :--- | :--- |
-| **TC-01** | Missing Tenure & 0-Tenure Bounds | Handled 44 new hires with 0 tenure; safe fallback into probationary bucket. | **PASSED** |
-| **TC-02** | Salary Outliers & Boundary Robustness | 114 executive outliers detected (> $16,581); validated as legitimate Managers/Directors. | **PASSED** |
-| **TC-03** | Single-Employee Department Edge Case | Verified safe division (`NULLIF`, `NVL`, `DIVIDE`) to prevent zero division. | **PASSED** |
-| **TC-04** | Cross-Tool Metric Reconciliation | 1,470 total rows, 237 leavers, 16.12% attrition rate match across Python, SQL, and Power BI. | **PASSED** |
-
----
-
-## 6. How to Run the Project Locally
-
-### Prerequisites
-- Python 3.10+
-- Oracle Database 19c / 21c (or SQL Developer / LiveSQL)
-- Power BI Desktop
-
-### 1. Python Environment Setup & Execution
-```bash
-# 1. Install dependencies
-pip install -r python/requirements.txt
-
-# 2. Run data engineering, cleaning, and plot generation
-python python/01_data_cleaning_and_eda.py
-
-# 3. Run automated test cases
-python python/02_test_cases_validation.py
-```
-
-### 2. Oracle Database Setup
-```sql
--- Connect as HR_ANALYTICS in SQL*Plus or Oracle SQL Developer:
-@sql/01_oracle_ddl_star_schema.sql
-@sql/02_oracle_data_load.sql
-@sql/03_oracle_attrition_queries.sql
-@sql/04_oracle_views_plsql.sql
-@sql/05_oracle_test_cases.sql
-
--- Run the PL/SQL Alert Procedure:
-SET SERVEROUTPUT ON;
-EXEC PRC_CHECK_ATTRITION_ALERT(15.0);
-```
-
-### 3. Power BI Dashboard Setup
-Follow the step-by-step instructions in [`powerbi/powerbi_build_guide.md`](powerbi/powerbi_build_guide.md) to load the processed CSV files, configure the Star Schema relationships, create DAX measures from [`powerbi/dax_measures.txt`](powerbi/dax_measures.txt), and lay out the executive dashboard canvas.
-
----
-
-## 7. How to Push this Project to Your GitHub Repository
-
-```bash
-# 1. Configure your Git credentials
-git config user.name "Ranjan Maiti"
-git config user.email "your_email@example.com"
-
-# 2. Add all project files
-git add .
-
-# 3. Commit the enterprise project
-git commit -m "feat: complete HCLTech Project 10 - Employee Attrition Analysis"
-
-# 4. Link your remote GitHub repository and push
-git remote add origin https://github.com/RanjanMaiti/HCLTech-Employee-Attrition-Analysis.git
-git branch -M main
-git push -u origin main
-```
-
----
-
-## 8. LMS Submission Instructions for Ranjan Maiti
-
-To submit your project on the HCLTech Career Shaper LMS:
-1. Ensure your submission folder is named: `2500321540146_RanjanMaiti_EmployeeAttritionAnalysis`.
-2. Generate the single consolidated ZIP package:
+### A. Python Analysis
+1. Navigate to the `python/` folder:
    ```bash
-   zip -r 2500321540146_RanjanMaiti_EmployeeAttritionAnalysis.zip . -x "*.git*"
+   cd python
+   pip install -r requirements.txt
    ```
-3. Upload `2500321540146_RanjanMaiti_EmployeeAttritionAnalysis.zip` to the **"Project Submission - Output Files"** assignment on Moodle.
-4. Verify your status changes from *Draft* to **"Submitted for grading"**.
+2. Open and run the notebook in VS Code or Jupyter:
+   ```bash
+   jupyter notebook employee_attrition_analysis.ipynb
+   ```
+   *Note: All 12 analytical steps, tables, and Seaborn/Matplotlib charts are pre-executed and visible immediately upon opening.*
+
+### B. Oracle SQL Queries
+1. Open **Oracle SQL Developer** (or Oracle Live SQL / SQL*Plus) and connect to your database.
+2. Open the file `sql/employee_attrition_analysis.sql`.
+3. Follow the loading instructions in Section 2 to import `dataset/employee_attrition_cleaned.csv` into `EMPLOYEE_ATTRITION`.
+4. Run the queries in Sections 3 to 10 to inspect overall attrition, department breakdown, tenure flight window, and views.
+
+### C. Power BI Dashboard
+- **Dashboard Title:** `EMPLOYEE ATTRITION ANALYSIS`
+- **Subtitle:** `HR Workforce Intelligence Dashboard`
+- **Visual Proof:** Review `dashboard/dashboard_screenshot.png` for the completed dashboard layout.
+- **DAX Formulas:** Open `powerbi/dax_measures.txt` for ready-to-use formulas.
+- **Desktop Build Guide:** Follow `powerbi/powerbi_build_guide.md` to load the CSV, configure cards, and build charts on any Windows PC with Power BI Desktop.
 
 ---
-*Developed with excellence by Ranjan Maiti (Roll No: 2500321540146) for HCLTech Career Shaper Project Evaluation.*
+
+## 5. Key Verified Project Findings (Actual Statistics)
+
+All statistics are strictly calculated from the 1,470 employee records:
+
+| Analytical Dimension | High-Risk Cohort | Baseline / Low-Risk Cohort | Impact & Business Insight |
+| :--- | :--- | :--- | :--- |
+| **1. Mandatory OverTime** | **30.53%** (127 / 416 left) | **10.44%** (110 / 1,054 left) | **Nearly 3x turnover multiplier** due to workload burnout. |
+| **2. Service Tenure** | **29.82%** in Years 0-2 | **8.13%** in Years 10+ | **43.04% of all resignations** happen in the first 2 years. |
+| **3. Monthly Salary** | **27.12%** (< $3,500/mo) | **5.64%** ($12,000+/mo) | **54.0% of all exits** occur in the entry-level wage tier. |
+| **4. Department** | **20.63%** in Sales | **13.84%** in R&D | Sales Reps within Sales suffer an extreme **39.76%** exit rate. |
+| **5. Age Generation** | **27.91%** in Age 18-29 | **9.74%** in Age 40-49 | Early-career mobility drives turnover in younger cohorts. |
+
+---
+
+## 6. Strategic Business Recommendations & ROI
+
+1. **OverTime Capping & Workload Balancing:** Cap consecutive overtime weeks to a maximum of 2 per month per employee; cross-train staff to absorb peak volume. Projected savings: **~38 retained staff/year**.
+2. **180-Day "New Hire Concierge" Mentorship:** Pair new hires with experienced peers outside their reporting hierarchy with structured check-ins at 30, 90, and 180 days. Projected savings: **~34 retained staff/year**.
+3. **Sales Representative Career Ladder:** Establish a clear 12-month milestone ladder from Sales Representative to Junior Account Executive with progressive compensation.
+4. **Estimated Financial ROI:** Reducing turnover by 25% (59 fewer departures at $25,000 avg replacement cost) saves **$1.475 Million annually**.
+
+---
+
+## 7. Submission Deliverables Summary (For HCL Portal)
+
+1. **Dataset Proof PDF:** `submission/Dataset_Details.pdf` (Source link, dictionary, sample records).
+2. **Completed Project Report PDF:** `submission/Employee_Attrition_Analysis_Report.pdf` (Cover page, methodology, charts, SQL, dashboard screenshot, insights).
+3. **Dashboard Screenshot:** `dashboard/dashboard_screenshot.png` (High-resolution full dashboard visual).
+4. **Cleaned Dataset CSV:** `dataset/employee_attrition_cleaned.csv` (Ready for grading and analysis).

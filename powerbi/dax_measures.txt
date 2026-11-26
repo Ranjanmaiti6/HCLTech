@@ -1,86 +1,98 @@
 =============================================================================
 HCLTech Career Shaper - Final Academic Project Submission
 Project No: 10 - Employee Attrition Analysis
-Candidate Name: Ranjan Maiti | Roll No: 2500321540146
-File: dax_measures.txt
-Description: Production DAX Formulas for Power BI Measures Table (_Measures)
+Student Name: Ranjan Maiti | Roll Number: 2500321540146
+Academic Level: 2nd-Year B.Tech
+File: powerbi/dax_measures.txt
 =============================================================================
 
--- 1. BASELINE HEADCOUNT MEASURES
+This file contains all DAX (Data Analysis Expressions) formulas required to build 
+the "EMPLOYEE ATTRITION ANALYSIS" Power BI Dashboard.
+
+These formulas are designed for the cleaned dataset table: 'EMPLOYEE_ATTRITION' 
+(imported from dataset/employee_attrition_cleaned.csv).
+
+
+-----------------------------------------------------------------------------
+1. FIVE CORE KPI CARD MEASURES (Matches Dashboard Top Cards)
+-----------------------------------------------------------------------------
+
+-- KPI 1: Total Employees
 Total Employees = 
-COUNTROWS(Fact_Attrition)
+COUNTROWS('EMPLOYEE_ATTRITION')
 
-Attrition Count = 
-SUM(Fact_Attrition[Attrition_Flag])
-
+-- KPI 2: Active Employees (Retained Workforce)
 Active Employees = 
-[Total Employees] - [Attrition Count]
+CALCULATE(
+    COUNTROWS('EMPLOYEE_ATTRITION'),
+    'EMPLOYEE_ATTRITION'[Attrition] = "No"
+)
 
-Attrition Rate % = 
-DIVIDE([Attrition Count], [Total Employees], 0) * 100
+-- KPI 3: Employees Who Left (Voluntary Exits)
+Employees Who Left = 
+CALCULATE(
+    COUNTROWS('EMPLOYEE_ATTRITION'),
+    'EMPLOYEE_ATTRITION'[Attrition] = "Yes"
+)
+
+-- KPI 4: Overall Attrition Rate (%)
+Overall Attrition Rate % = 
+DIVIDE([Employees Who Left], [Total Employees], 0) * 100
+
+-- KPI 5: Average Employee Age
+Average Employee Age = 
+ROUND(AVERAGE('EMPLOYEE_ATTRITION'[Age]), 1)
+
+
+-----------------------------------------------------------------------------
+2. COMPLEMENTARY METRICS & AVERAGES
+-----------------------------------------------------------------------------
 
 Retention Rate % = 
-100 - [Attrition Rate %]
+100 - [Overall Attrition Rate %]
 
-
--- 2. FINANCIAL & TENURE AVERAGES
 Average Monthly Salary = 
-AVERAGE(Fact_Attrition[MonthlyIncome])
+AVERAGE('EMPLOYEE_ATTRITION'[MonthlyIncome])
 
-Median Monthly Salary = 
-MEDIAN(Fact_Attrition[MonthlyIncome])
-
-Average Tenure Years = 
-AVERAGE(Fact_Attrition[YearsAtCompany])
-
-Average Total Working Years = 
-AVERAGE(Dim_Employee[TotalWorkingYears])
+Average Years at Company = 
+AVERAGE('EMPLOYEE_ATTRITION'[YearsAtCompany])
 
 
--- 3. SEGMENTED & CONDITIONAL RISK MEASURES
-OverTime Attrition Count = 
-CALCULATE(
-    [Attrition Count],
-    Fact_Attrition[OverTime] = "Yes"
-)
+-----------------------------------------------------------------------------
+3. CONDITIONAL & SEGMENTED RISK MEASURES (For Drilldowns & Tooltips)
+-----------------------------------------------------------------------------
 
+-- OverTime Attrition Rate %
 OverTime Attrition Rate % = 
 CALCULATE(
-    [Attrition Rate %],
-    Fact_Attrition[OverTime] = "Yes"
+    [Overall Attrition Rate %],
+    'EMPLOYEE_ATTRITION'[OverTime] = "Yes"
 )
 
+-- Non-OverTime Attrition Rate %
 Non-OverTime Attrition Rate % = 
 CALCULATE(
-    [Attrition Rate %],
-    Fact_Attrition[OverTime] = "No"
+    [Overall Attrition Rate %],
+    'EMPLOYEE_ATTRITION'[OverTime] = "No"
 )
 
-OverTime Impact Delta = 
-[OverTime Attrition Rate %] - [Non-OverTime Attrition Rate %]
-
+-- Early Career Flight Risk (0-2 Years Tenure)
 Early Career Attrition Rate % = 
 CALCULATE(
-    [Attrition Rate %],
-    Fact_Attrition[TenureBand] = "0-2 Years"
+    [Overall Attrition Rate %],
+    'EMPLOYEE_ATTRITION'[TenureBand] = "0-2 Years"
 )
 
+-- Low Salary Flight Risk (<$3,500/Month)
 Low Salary Attrition Rate % = 
 CALCULATE(
-    [Attrition Rate %],
-    Fact_Attrition[SalaryBand] = "Low (<3.5k)"
+    [Overall Attrition Rate %],
+    'EMPLOYEE_ATTRITION'[SalaryBand] = "Low (<3.5k)"
 )
 
-Executive Outlier Count = 
-CALCULATE(
-    COUNTROWS(Fact_Attrition),
-    Fact_Attrition[Is_Salary_Outlier] = 1
-)
-
-
--- 4. RISK BAND CLASSIFICATION MEASURE (DYNAMIC KPI INDICATOR)
-Attrition Risk Classification = 
-VAR Rate = [Attrition Rate %]
+-- Dynamic Health Status Indicator
+Attrition Status Indicator = 
+VAR Rate = [Overall Attrition Rate %]
 RETURN
     SWITCH(
         TRUE(),
@@ -90,11 +102,37 @@ RETURN
     )
 
 
--- 5. DYNAMIC DASHBOARD SUBTITLE / HEADER
-Dynamic Slicer Context = 
-"Displaying: " & 
-SELECTEDVALUE(Dim_Department[DepartmentName], "All Departments") & 
-" | Gender: " & 
-SELECTEDVALUE(Dim_Employee[Gender], "All Genders") & 
-" | Overall Attrition: " & 
-FORMAT([Attrition Rate %], "0.0") & "%"
+-----------------------------------------------------------------------------
+4. STEP-BY-STEP POWER BI SETUP INSTRUCTIONS
+-----------------------------------------------------------------------------
+Step 1: Open Power BI Desktop (Windows).
+Step 2: Click 'Get Data' -> 'Text/CSV' -> Select 'dataset/employee_attrition_cleaned.csv'.
+Step 3: Click 'Load'. Rename table to 'EMPLOYEE_ATTRITION'.
+Step 4: Create a Measures Table:
+        - In Home tab, click 'Enter Data'.
+        - Name table: '_Measures' -> Click 'Load'.
+Step 5: Right-click '_Measures' -> Select 'New Measure' -> Copy and paste each DAX formula above.
+Step 6: Build the 5 KPI Cards along the top row:
+        - Card 1: [Total Employees] (Format: #,##0 -> Output: 1,470)
+        - Card 2: [Active Employees] (Format: #,##0 -> Output: 1,233)
+        - Card 3: [Employees Who Left] (Format: #,##0 -> Output: 237)
+        - Card 4: [Overall Attrition Rate %] (Format: 0.0% -> Output: 16.1%)
+        - Card 5: [Average Employee Age] (Format: 0.0 -> Output: 36.9)
+Step 7: Build the 6 Visualizations:
+        1. Clustered Bar/Column Chart: X-axis = Department, Y-axis = [Overall Attrition Rate %]
+        2. Clustered Column Chart: X-axis = Gender, Y-axis = [Overall Attrition Rate %]
+        3. Column Chart: X-axis = AgeGroup, Y-axis = [Overall Attrition Rate %]
+        4. Column Chart: X-axis = SalaryBand, Y-axis = [Overall Attrition Rate %]
+        5. Column Chart: X-axis = TenureBand, Y-axis = [Overall Attrition Rate %]
+        6. Donut / Bar Chart: Legend/X-axis = OverTime, Values = [Overall Attrition Rate %]
+Step 8: Add 3 Slicers (Dropdown or Button list):
+        - Slicer 1: Department
+        - Slicer 2: Gender
+        - Slicer 3: JobRole
+Step 9: Theme & Styling:
+        - Background: Dark Navy (#0B192C / #1E2A38)
+        - Visual cards: White or clean elevated container cards with clear contrast
+        - Title: EMPLOYEE ATTRITION ANALYSIS
+        - Subtitle: HR Workforce Intelligence Dashboard
+Step 10: Save file as 'Employee_Attrition_Dashboard.pbix'.
+=============================================================================
